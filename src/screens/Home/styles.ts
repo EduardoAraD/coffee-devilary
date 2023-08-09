@@ -3,7 +3,7 @@ import { styled, css } from "styled-components/native";
 
 export const Container = styled.View`
   flex: 1;
-  background-color: ${props => props.theme.colors.GRAY900};
+  background-color: ${props => props.theme.colors.GRAY800};
 `;
 
 export const Content = styled.View`
@@ -14,7 +14,7 @@ export const Content = styled.View`
 `;
 
 export const HView = styled.View`
-  margin-bottom: 50px;
+  margin-bottom: 16px;
   width: 100%;
   flex-direction: row;
   align-items: center;
@@ -30,6 +30,7 @@ export const Local = styled.Text`
 `;
 
 export const Title = styled.Text`
+  margin-top: 34px;
   ${({ theme }) => css`
     color: ${theme.colors.WHITE};
     font-family: ${theme.fontFamily.Baloo2.BOLD};

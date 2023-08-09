@@ -1,7 +1,7 @@
 import { css, styled } from "styled-components/native";
 
 export const Touch = styled.TouchableOpacity`
-  background-color: ${({ theme }) => theme.colors.GRAY800};
+  background-color: ${({ theme }) => theme.colors.GRAY700};
   border-radius: 6px 36px 6px 36px;
   width: 100%;
 

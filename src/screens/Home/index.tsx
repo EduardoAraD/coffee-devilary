@@ -1,5 +1,15 @@
 import { useEffect, useState } from 'react';
-import { ScrollView, SectionList, View } from 'react-native'
+import { SectionList, StatusBar, View } from 'react-native';
+import Animated, {
+  Extrapolate,
+  SlideInRight,
+  interpolate,
+  runOnJS,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue
+} from 'react-native-reanimated';
+import { useTheme } from 'styled-components/native';
 
 import { MarketCoffee } from '../../Model/MarkedCoffee';
 import { SectionListCoffee } from '../../Model/SectionListCoffee';
@@ -28,8 +38,14 @@ import {
 } from './styles';
 
 export function Home() {
+  const { colors } = useTheme();
+
+  const [isUpdateColorStatusBar, setIsUpdateColorStatusBar] = useState(false);
+  const [search, setSearch] = useState('');
   const [optionFilter, setOptionFilter] = useState<MarketCoffee | ''>('');
   const [listSection, setListSection] = useState<SectionListCoffee[]>([]);
+
+  const scrollY = useSharedValue(0);
 
   function handleUpdateFilter(mark: MarketCoffee) {
     if(mark === optionFilter) {
@@ -40,17 +56,97 @@ export function Home() {
   }
 
   function getLoadingData() {
-    const list = getAllCoffeeSectionList({ marked: '', search: '' });
+    const list = getAllCoffeeSectionList({ marked: optionFilter, search });
     setListSection(list);
   }
 
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      scrollY.value = event.contentOffset.y;
+      if(event.contentOffset.y >= 80 && !isUpdateColorStatusBar) {
+        runOnJS(setIsUpdateColorStatusBar)(true);
+      } else if(event.contentOffset.y < 80 && isUpdateColorStatusBar) {
+        runOnJS(setIsUpdateColorStatusBar)(false);
+      }
+    }
+  })
+
+  const fixedHeaderStyle = useAnimatedStyle(() => {
+    return {
+      position: 'absolute',
+      zIndex: 2,
+      paddingHorizontal: 32,
+      paddingTop: 70,
+      backgroundColor: colors.GRAY900,
+      width: '100%',
+      opacity: interpolate(scrollY.value, [50, 90], [0, 1], Extrapolate.CLAMP),
+      marginBottom: 0,
+      transform: [
+        { translateY: interpolate(scrollY.value, [50, 100], [-40, 0], Extrapolate.CLAMP) }
+      ],
+    }
+  })
+  const fixedOptionsStyle = useAnimatedStyle(() => {
+    return {
+      position: 'absolute',
+      zIndex: 1,
+      paddingHorizontal: 32,
+      marginTop: 106,
+      borderTopWidth: 1,
+      borderTopColor: colors.GRAY500,
+      backgroundColor: colors.GRAY900,
+      width: '100%',
+      opacity: interpolate(scrollY.value, [550, 590], [0, 1], Extrapolate.CLAMP),
+      marginBottom: 0,
+      transform: [
+        { translateY: interpolate(scrollY.value, [550, 600], [-40, 0], Extrapolate.CLAMP) }
+      ],
+    }
+  })
+
   useEffect(() => {
     getLoadingData(); 
-  }, [])
+  }, [search, optionFilter])
 
   return (
     <Container>
-      <ScrollView>
+      <Animated.View style={fixedHeaderStyle}>
+        <StatusBar barStyle={isUpdateColorStatusBar ? 'dark-content' : 'light-content'} />
+        <HView style={{ justifyContent: 'space-between' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <IconMap />
+            <Local style={{ color: colors.GRAY100 }}>Caucaia, CE</Local>
+          </View>
+          <IconShop />
+        </HView>
+      </Animated.View>
+      <Animated.View style={fixedOptionsStyle}>
+        <ViewOptions>
+          <TextTitle>Nossos Cafés</TextTitle>
+          <HView style={{ columnGap: 8 }}>
+            <OptionFilterCoffee
+              marked='TRADICIONAL'
+              active={optionFilter === 'TRADICIONAL'}
+              onPress={() => handleUpdateFilter('TRADICIONAL')}
+            />
+            <OptionFilterCoffee
+              marked='DOCE'
+              active={optionFilter === 'DOCE'}
+              onPress={() => handleUpdateFilter('DOCE')}
+            />
+            <OptionFilterCoffee
+              marked='ESPECIAL'
+              active={optionFilter === 'ESPECIAL'}
+              onPress={() => handleUpdateFilter('ESPECIAL')}
+            />
+          </HView>
+        </ViewOptions>
+      </Animated.View>
+      <Animated.ScrollView
+        showsVerticalScrollIndicator={false}
+        onScroll={scrollHandler}
+        scrollEventThrottle={16}
+      >
         <Content>
           <HView style={{ justifyContent: 'space-between' }}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -63,6 +159,8 @@ export function Home() {
           <Input
             style={{ marginTop: 15 }}
             placeholder='Pesquisar'
+            onChangeText={setSearch}
+            value={search}
           />
           <ViewCoffee>
             <SementesCoffee />
@@ -97,17 +195,19 @@ export function Home() {
             sections={listSection}
             scrollEnabled={false}
             keyExtractor={(item) => item.name}
-            renderItem={({item}) => (
-              <CardTouchCoffee
-                coffee={item}
-              />
+            renderItem={({item, index}) => (
+              <Animated.View entering={SlideInRight.delay(index * 200)}>
+                <CardTouchCoffee
+                  coffee={item}
+                />
+              </Animated.View>
             )}
             renderSectionHeader={({section: {title}}) => (
               <TextSection>{title}</TextSection>
             )}
           />
         </Container2>
-      </ScrollView>
+      </Animated.ScrollView>
     </Container>
   )
 }
