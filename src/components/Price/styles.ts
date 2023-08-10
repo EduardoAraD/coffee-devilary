@@ -5,20 +5,25 @@ export const Container = styled.View`
   align-items: flex-end;
 `;
 
-export const RS = styled.Text`
-  ${({ theme }) => css`
+export type TypeSize = 'lg' | 'md';
+type SizeProps = {
+  size: TypeSize;
+}
+
+export const RS = styled.Text<SizeProps>`
+  ${({ theme, size }) => css`
     font-family: ${theme.fontFamily.Baloo2.BOLD};
     color: ${theme.colors.YELLOW_DARK};
-    font-size: ${theme.fontSize.TEXT.SM}px;
+    font-size: ${size === 'md' ? theme.fontSize.TEXT.SM : theme.fontSize.TEXT.MD}px;
+    margin-bottom: ${size === 'md' ? 4 : 8}px;
   `}
-  margin-bottom: 4px;
 `;
 
-export const Text = styled.Text`
+export const Text = styled.Text<SizeProps>`
   margin-left: 3px;
-  ${({ theme }) => css`
+  ${({ theme, size }) => css`
     font-family: ${theme.fontFamily.Baloo2.BOLD};
     color: ${theme.colors.YELLOW_DARK};
-    font-size: ${theme.fontSize.TITLE.LG}px;
+    font-size: ${size === 'md' ? theme.fontSize.TITLE.LG : theme.fontSize.TITLE.XL}px;
   `}
 `;

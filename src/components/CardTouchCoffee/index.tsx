@@ -1,17 +1,18 @@
+import { TouchableOpacityProps } from 'react-native';
+
 import { Price } from '../Price';
 
 import { Coffee } from '../../Model/Coffee';
 
 import { Description, Image, Info, Title, Touch } from './styles';
-import CoffeePng from '../../assets/coffee1.png';
 
-type Props = {
+type Props = TouchableOpacityProps & {
   coffee: Coffee;
 }
 
-export function CardTouchCoffee({ coffee: { description, image, name, price } }: Props) {
+export function CardTouchCoffee({ coffee: { description, image, name, price }, ...rest }: Props) {
   return (
-    <Touch activeOpacity={0.8}>
+    <Touch activeOpacity={0.8} {...rest}>
       <Image source={image} />
       <Info>
         <Title>{name}</Title>

@@ -8,13 +8,18 @@ import Animated, {
 
 import { CardCoffee } from "../CardCoffee";
 
-import { dataCarrousel } from './data';
+import { Coffee } from "../../Model/Coffee";
 
-export function Carrousel(){
+type Props = {
+  dataCarrousel: Coffee[];
+}
+
+export function Carrousel({ dataCarrousel }: Props){
   const scale1 = useSharedValue(1.4);
   const scale2 = useSharedValue(1);
   const scale3 = useSharedValue(1);
   const [activeBanner, setActiveBanner] = useState(0);
+
   const FlatlistRef = useRef<FlatList>(null);
 
   const animetedContainerStyle1 = useAnimatedStyle(() => {

@@ -34,8 +34,8 @@ export function CardCoffee({
       <ViewMarked>
         <TextMarked>{marked}</TextMarked>
       </ViewMarked>
-      <Title>{name}</Title>
-      <Subtitle>{description}</Subtitle>
+      <Title numberOfLines={1}>{name}</Title>
+      <Subtitle numberOfLines={2}>{description}</Subtitle>
       <Price price={price} />
     </Container>
   )

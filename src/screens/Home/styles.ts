@@ -8,7 +8,7 @@ export const Container = styled.View`
 
 export const Content = styled.View`
   background-color: ${props => props.theme.colors.GRAY100};
-  padding-top: 96px;
+  padding-top: 44px;
   padding-left: 32px;
   padding-right: 32px;
 `;

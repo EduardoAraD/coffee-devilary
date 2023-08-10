@@ -36,11 +36,18 @@ import {
   ViewOptions,
   TextSection
 } from './styles';
+import { useNavigation } from '@react-navigation/native';
+import { Header } from '../../components/Header';
+import { Coffee } from '../../Model/Coffee';
+
+import { getThreeCoffeeInCarrousel } from '../../services/getThreeCoffeeInCarrousel';
 
 export function Home() {
   const { colors } = useTheme();
+  const { navigate } = useNavigation();
 
   const [isUpdateColorStatusBar, setIsUpdateColorStatusBar] = useState(false);
+  const [dataCarrousel, setDataCarrousel] = useState<Coffee[]>(getThreeCoffeeInCarrousel());
   const [search, setSearch] = useState('');
   const [optionFilter, setOptionFilter] = useState<MarketCoffee | ''>('');
   const [listSection, setListSection] = useState<SectionListCoffee[]>([]);
@@ -53,6 +60,10 @@ export function Home() {
     } else {
       setOptionFilter(mark);
     }
+  }
+
+  function handleGoDetails(name: string) {
+    navigate('details', { name });
   }
 
   function getLoadingData() {
@@ -76,13 +87,14 @@ export function Home() {
       position: 'absolute',
       zIndex: 2,
       paddingHorizontal: 32,
-      paddingTop: 70,
+      paddingTop: 44,
       backgroundColor: colors.GRAY900,
-      width: '100%',
+      borderBottomWidth: 1,
+      borderBottomColor: colors.GRAY500,
       opacity: interpolate(scrollY.value, [50, 90], [0, 1], Extrapolate.CLAMP),
       marginBottom: 0,
       transform: [
-        { translateY: interpolate(scrollY.value, [50, 100], [-40, 0], Extrapolate.CLAMP) }
+        { translateY: interpolate(scrollY.value, [50, 100], [-50, 0], Extrapolate.CLAMP) }
       ],
     }
   })
@@ -91,9 +103,7 @@ export function Home() {
       position: 'absolute',
       zIndex: 1,
       paddingHorizontal: 32,
-      marginTop: 106,
-      borderTopWidth: 1,
-      borderTopColor: colors.GRAY500,
+      marginTop: 100,
       backgroundColor: colors.GRAY900,
       width: '100%',
       opacity: interpolate(scrollY.value, [550, 590], [0, 1], Extrapolate.CLAMP),
@@ -106,19 +116,22 @@ export function Home() {
 
   useEffect(() => {
     getLoadingData(); 
-  }, [search, optionFilter])
+  }, [search, optionFilter]);
+
+  useEffect(() => {
+    setDataCarrousel(
+      getThreeCoffeeInCarrousel()
+    );
+  }, []);
 
   return (
     <Container>
       <Animated.View style={fixedHeaderStyle}>
-        <StatusBar barStyle={isUpdateColorStatusBar ? 'dark-content' : 'light-content'} />
-        <HView style={{ justifyContent: 'space-between' }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <IconMap />
-            <Local style={{ color: colors.GRAY100 }}>Caucaia, CE</Local>
-          </View>
-          <IconShop />
-        </HView>
+        <StatusBar
+          barStyle={isUpdateColorStatusBar ? 'dark-content' : 'light-content'}
+          translucent
+        />
+        <Header typeColor='SECUNDARY' />
       </Animated.View>
       <Animated.View style={fixedOptionsStyle}>
         <ViewOptions>
@@ -148,13 +161,7 @@ export function Home() {
         scrollEventThrottle={16}
       >
         <Content>
-          <HView style={{ justifyContent: 'space-between' }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <IconMap />
-              <Local>Caucaia, CE</Local>
-            </View>
-            <IconShop />
-          </HView>
+          <Header />
           <Title>Encontre o café perfeito para qualquer hora do dia</Title>
           <Input
             style={{ marginTop: 15 }}
@@ -167,7 +174,7 @@ export function Home() {
           </ViewCoffee>
         </Content>
         <View style={{ marginTop: -120, zIndex: 1 }}>
-          <Carrousel />
+          <Carrousel dataCarrousel={dataCarrousel} />
         </View>
 
         <Container2>
@@ -199,6 +206,7 @@ export function Home() {
               <Animated.View entering={SlideInRight.delay(index * 200)}>
                 <CardTouchCoffee
                   coffee={item}
+                  onPress={() => handleGoDetails(item.name)}
                 />
               </Animated.View>
             )}
