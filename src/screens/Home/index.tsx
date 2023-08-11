@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { SectionList, StatusBar, View } from 'react-native';
+import { useCallback, useEffect, useState } from 'react';
+import { ImageSourcePropType, SectionList, StatusBar, View } from 'react-native';
 import Animated, {
   Extrapolate,
   SlideInRight,
@@ -36,16 +36,29 @@ import {
   ViewOptions,
   TextSection
 } from './styles';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import { Header } from '../../components/Header';
 import { Coffee } from '../../Model/Coffee';
 
 import { getThreeCoffeeInCarrousel } from '../../services/getThreeCoffeeInCarrousel';
+import { ModalShopCart } from '../../components/ModalCarrinho';
+
+export type HomeRouteProps = {
+  product?: {
+    name: string;
+    image: ImageSourcePropType;
+    ml: string;
+    qtd: number;
+  }
+}
 
 export function Home() {
+  const params = useRoute().params as HomeRouteProps;
   const { colors } = useTheme();
   const { navigate } = useNavigation();
 
+  const [showModal, setShowModal] = useState(false);
+  const [productModal, setProductModal] = useState({ name: '', ml: '', qtd: 0 })
   const [isUpdateColorStatusBar, setIsUpdateColorStatusBar] = useState(false);
   const [dataCarrousel, setDataCarrousel] = useState<Coffee[]>(getThreeCoffeeInCarrousel());
   const [search, setSearch] = useState('');
@@ -114,6 +127,21 @@ export function Home() {
     }
   })
 
+  const getParamsHome = useCallback(() => {
+    if(params) {
+      if(params.product) {
+        setShowModal(true);
+        setProductModal(params.product);
+
+        const time = setTimeout(() => {
+          setShowModal(false);
+        }, 5000);
+
+        return () => clearTimeout(time);
+      }
+    }
+  }, [params])
+
   useEffect(() => {
     getLoadingData(); 
   }, [search, optionFilter]);
@@ -124,6 +152,8 @@ export function Home() {
     );
   }, []);
 
+  useFocusEffect(getParamsHome);
+
   return (
     <Container>
       <Animated.View style={fixedHeaderStyle}>
@@ -131,7 +161,7 @@ export function Home() {
           barStyle={isUpdateColorStatusBar ? 'dark-content' : 'light-content'}
           translucent
         />
-        <Header typeColor='SECUNDARY' />
+        <Header typeColor='SECUNDARY' showIconShop />
       </Animated.View>
       <Animated.View style={fixedOptionsStyle}>
         <ViewOptions>
@@ -161,7 +191,7 @@ export function Home() {
         scrollEventThrottle={16}
       >
         <Content>
-          <Header />
+          <Header showIconShop />
           <Title>Encontre o café perfeito para qualquer hora do dia</Title>
           <Input
             style={{ marginTop: 15 }}
@@ -216,6 +246,13 @@ export function Home() {
           />
         </Container2>
       </Animated.ScrollView>
+      {showModal && params && (
+        <ModalShopCart
+          ml={productModal.ml}
+          name={productModal.name}
+          qtd={productModal.qtd.toString()}
+        />
+      )}
     </Container>
   )
 }

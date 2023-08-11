@@ -65,9 +65,13 @@ export const Form = styled.View`
   width: 100%;
 `;
 
-export const FormText = styled.Text`
-  ${({ theme }) => css`
-    color: ${theme.colors.GRAY400};
+type ColorError = {
+  isError: boolean;
+}
+
+export const FormText = styled.Text<ColorError>`
+  ${({ theme, isError }) => css`
+    color: ${isError ? theme.colors.RED_DARK : theme.colors.GRAY400};
     font-family: ${theme.fontFamily.Roboto.REGULAR};
     font-size: ${theme.fontSize.TEXT.SM}px;
   `}
@@ -90,9 +94,9 @@ export const Actions = styled.View`
   border-radius: 6px;
 `;
 
-export const TextQtd = styled.Text`
-  ${({ theme }) => css`
-    color: ${theme.colors.GRAY100};
+export const TextQtd = styled.Text<ColorError>`
+  ${({ theme, isError }) => css`
+    color: ${isError ? theme.colors.RED_DARK : theme.colors.GRAY100};
     font-family: ${theme.fontFamily.Roboto.REGULAR};
     font-size: ${theme.fontSize.TEXT.MD}px;
   `}

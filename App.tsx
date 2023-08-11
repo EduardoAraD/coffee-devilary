@@ -4,6 +4,8 @@ import { useFonts, Roboto_400Regular, Roboto_700Bold } from '@expo-google-fonts/
 import { Baloo2_700Bold } from '@expo-google-fonts/baloo-2';
 import { ThemeProvider } from 'styled-components/native';
 
+import { ShoppingCartProvider } from './src/contexts/cardShopping';
+
 import { Routes } from './src/routes';
 
 import { SplashArt } from './src/screens/SplashArt';
@@ -34,7 +36,9 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <StatusBar barStyle='light-content' translucent />
-      <Routes />
+      <ShoppingCartProvider>
+        <Routes />
+      </ShoppingCartProvider>
     </ThemeProvider>
   );
 }

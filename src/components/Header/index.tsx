@@ -1,6 +1,8 @@
 import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
+import { useShoppingCart } from "../../hooks/useShoppingCart";
+
 import {
   Container,
   Local,
@@ -10,20 +12,24 @@ import {
   NumberShop,
   ViewShop,
   IconBack,
-  Touch
+  Touch,
+  Title,
 } from "./styles";
 
 type Props = {
   typeColor?: TypeColorHeader;
-  numberItemShop?: number;
+  title?: string;
   showIconBack?: boolean;
+  showIconShop?: boolean;
 }
 
 export function Header({
   typeColor = 'PRIMARY',
-  numberItemShop = 0,
+  title,
   showIconBack = false,
+  showIconShop = false,
 }: Props) {
+  const { shopCart } = useShoppingCart();
   const { goBack, navigate } = useNavigation();
 
   function handleGoBack() {
@@ -31,7 +37,7 @@ export function Header({
   }
 
   function handleGoShoppingCart() {
-    console.log('NADA AINDA')
+    navigate('shopping');
   }
 
   return (
@@ -43,7 +49,7 @@ export function Header({
             onPress={handleGoBack}
             style={{ marginLeft: -10 }}
           >
-            <IconBack />
+            <IconBack typeColor={typeColor} />
           </Touch>
         ): (
           <>
@@ -52,20 +58,28 @@ export function Header({
           </>
         )}
       </View>
-      <View>
-        <Touch
-          style={{ marginRight: -10 }}
-          onPress={handleGoShoppingCart}
-          activeOpacity={0.8}
-        >
-          <IconShop active={numberItemShop > 0} />
-          {numberItemShop > 0 && (
-            <ViewShop>
-              <NumberShop>{numberItemShop}</NumberShop>
-            </ViewShop>
-          )}
-        </Touch>
-      </View>
+      {title && (
+        <Title>{title}</Title> 
+      )}
+      {showIconShop ? (
+        <View>
+          <Touch
+            style={{ marginRight: -10 }}
+            onPress={handleGoShoppingCart}
+            activeOpacity={0.8}
+          >
+            <IconShop active={shopCart.length > 0} />
+            {shopCart.length > 0 && (
+              <ViewShop>
+                <NumberShop>{shopCart.length}</NumberShop>
+              </ViewShop>
+            )}
+          </Touch>
+        </View>
+      ) : (
+        <View style={{ width: 30, height: 40, }} />
+      )}
+      
     </Container>
   )
 }

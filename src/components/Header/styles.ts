@@ -55,8 +55,16 @@ export const Touch = styled.TouchableOpacity`
   padding: 10px;
 `;
 
-export const IconBack = styled(ArrowLeft).attrs(({ theme }) => ({
-  color: theme.colors.WHITE,
+export const Title = styled.Text`
+  ${({ theme }) => css`
+    color: ${theme.colors.GRAY200};
+    font-family: ${theme.fontFamily.Baloo2.BOLD};
+    font-size: ${theme.fontSize.TITLE.SM}px;
+  `};
+`;
+
+export const IconBack = styled(ArrowLeft).attrs<ColorTypeProps>(({ theme, typeColor }) => ({
+  color: typeColor === 'PRIMARY' ? theme.colors.WHITE : theme.colors.GRAY200,
   size: 20,
   weight: 'bold'
 }))``;
