@@ -15,7 +15,7 @@ import { Container, IconTrash, Line, ViewRemove } from "./styles";
 
 export function ShoppingCart() {
   const { navigate } = useNavigation();
-  const { shopCart, updateQtdCoffeeShopCart, removeCoffeeShopCart } = useShoppingCart();
+  const { shopCart, updateQtdCoffeeShopCart, removeCoffeeShopCart, clearShopCart } = useShoppingCart();
 
   const swiapebleRefs = useRef<Swipeable[]>([]);
 
@@ -32,6 +32,7 @@ export function ShoppingCart() {
   }
 
   function handleConfirm() {
+    clearShopCart();
     navigate('finish');
   }
 

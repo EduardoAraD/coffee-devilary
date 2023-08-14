@@ -9,7 +9,7 @@ type Props = TouchableOpacityProps & {
 
 export function Button({ title, typeColor = 'PRIMARY', ...rest }: Props) {
   return (
-    <Container typeColor={typeColor} {...rest}>
+    <Container activeOpacity={0.8} typeColor={typeColor} {...rest}>
       <Text>{title}</Text>
     </Container>
   )

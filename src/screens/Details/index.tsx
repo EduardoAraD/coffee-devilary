@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { ScrollView, StatusBar, View } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
@@ -92,7 +92,7 @@ export function Details () {
         name: coffee.name,
         qtd: qtdCoffee,
         image: coffee.image,
-        priceItem: coffee.price,
+        priceItem: priceCoffee,
       }
       addCoffeeShopCart(newProduct);
 
@@ -106,6 +106,18 @@ export function Details () {
       }
     }
   }
+
+  const priceCoffee = useMemo(() => {
+    let value = coffee.price;
+    if(coffeeML === '144ml') {
+      return value;
+    } else if(coffeeML === '114ml') {
+      return Math.round(value * (114/144));
+    } else if(coffeeML === '227ml') {
+      return Math.round(value * (227/144));
+    }
+    return value;
+  }, [coffeeML]);
 
   useEffect(() => {
     loadingData();
@@ -124,7 +136,7 @@ export function Details () {
 
             <HView>
               <Title>{coffee.name}</Title>
-              <Price price={moneyMask(coffee.price)} size="lg" />
+              <Price price={moneyMask(priceCoffee)} size="lg" />
             </HView>
 
             <Description>{coffee.description}</Description>

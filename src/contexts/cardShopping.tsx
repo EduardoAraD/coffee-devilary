@@ -8,6 +8,7 @@ type ShoppingCardContext = {
   addCoffeeShopCart: (newProduct: ShopCart & { image: ImageSourcePropType }) => void;
   removeCoffeeShopCart: (id: number) => void;
   updateQtdCoffeeShopCart: (idQtd: { id: number, qtd: number }) => ShopCartComplete[];
+  clearShopCart:() => void;
 }
 
 type ShoppingCardProviderProps = {
@@ -51,12 +52,17 @@ export function ShoppingCartProvider ({ children }: ShoppingCardProviderProps) {
     return newList;
   }
 
+  function clearShopCart () {
+    setShopCart([]);
+  }
+
   return (
     <ShoppingCartContext.Provider value={{
       shopCart,
       addCoffeeShopCart,
       removeCoffeeShopCart,
       updateQtdCoffeeShopCart,
+      clearShopCart,
     }}>
       {children}
     </ShoppingCartContext.Provider>

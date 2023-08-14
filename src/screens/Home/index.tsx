@@ -135,9 +135,11 @@ export function Home() {
 
         const time = setTimeout(() => {
           setShowModal(false);
-        }, 5000);
+        }, 3000);
 
         return () => clearTimeout(time);
+      } else {
+        setShowModal(false);
       }
     }
   }, [params])
