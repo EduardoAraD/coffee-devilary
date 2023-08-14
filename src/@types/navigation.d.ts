@@ -7,6 +7,7 @@ export declare global {
       home: HomeRouteProps;
       details: DetailsRoutes;
       shopping: undefined;
+      finish: undefined;
     }
   }
 }

@@ -7,5 +7,5 @@ export interface Coffee {
   marked: MarketCoffee;
   name: string;
   description: string;
-  price: string;
+  price: number;
 }

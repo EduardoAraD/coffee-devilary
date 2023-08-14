@@ -4,7 +4,7 @@ import { ImageSourcePropType } from "react-native";
 import { ShopCart, ShopCartComplete } from "../Model/ShopCart";
 
 type ShoppingCardContext = {
-  shopCart: ShopCart[];
+  shopCart: ShopCartComplete[];
   addCoffeeShopCart: (newProduct: ShopCart & { image: ImageSourcePropType }) => void;
   removeCoffeeShopCart: (id: number) => void;
   updateQtdCoffeeShopCart: (idQtd: { id: number, qtd: number }) => ShopCartComplete[];
@@ -40,7 +40,7 @@ export function ShoppingCartProvider ({ children }: ShoppingCardProviderProps) {
 
   function updateQtdCoffeeShopCart({ id, qtd }: { id: number, qtd: number }) {
     const newList = shopCart.map(item => {
-      if(item.id) {
+      if(item.id === id) {
         return { ...item, qtd: qtd }
       } else {
         return item;

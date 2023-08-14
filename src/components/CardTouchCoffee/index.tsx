@@ -4,7 +4,15 @@ import { Price } from '../Price';
 
 import { Coffee } from '../../Model/Coffee';
 
-import { Description, Image, Info, Title, Touch } from './styles';
+import { moneyMask } from "../../utils/mask";
+
+import {
+  Description,
+  Image,
+  Info,
+  Title,
+  Touch
+} from './styles';
 
 type Props = TouchableOpacityProps & {
   coffee: Coffee;
@@ -17,7 +25,7 @@ export function CardTouchCoffee({ coffee: { description, image, name, price }, .
       <Info>
         <Title>{name}</Title>
         <Description>{description}</Description>
-        <Price price={price} />
+        <Price price={moneyMask(price)} />
       </Info>
     </Touch>
   )

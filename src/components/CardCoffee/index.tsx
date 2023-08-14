@@ -3,6 +3,8 @@ import { Image, ViewProps } from "react-native";
 import { Coffee } from "../../Model/Coffee";
 import { Price } from "../Price";
 
+import { moneyMask } from "../../utils/mask";
+
 import {
   Container,
   Subtitle,
@@ -36,7 +38,7 @@ export function CardCoffee({
       </ViewMarked>
       <Title numberOfLines={1}>{name}</Title>
       <Subtitle numberOfLines={2}>{description}</Subtitle>
-      <Price price={price} />
+      <Price price={moneyMask(price)} />
     </Container>
   )
 }

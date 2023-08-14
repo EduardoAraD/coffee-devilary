@@ -4,6 +4,7 @@ export interface ShopCart {
   qtd: number;
   name: string;
   ml: string;
+  priceItem: number;
 }
 
 export interface ShopCartComplete {
@@ -12,4 +13,5 @@ export interface ShopCartComplete {
   name: string;
   image: ImageSourcePropType;
   ml: string;
+  priceItem: number;
 }

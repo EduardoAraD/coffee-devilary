@@ -34,6 +34,7 @@ import {
   Touch,
   ViewOptionCoffee,
 } from "./styles";
+import { moneyMask } from "../../utils/mask";
 
 export type DetailsRoutes = {
   name: string;
@@ -51,7 +52,7 @@ export function Details () {
     image: CoffeeImg,
     marked: 'DOCE',
     name: name,
-    price: '',
+    price: 0,
   });
   const [qtdCoffee, setQtdCoffee] = useState(1);
   const [coffeeML, setCoffeeML] = useState('');
@@ -91,6 +92,7 @@ export function Details () {
         name: coffee.name,
         qtd: qtdCoffee,
         image: coffee.image,
+        priceItem: coffee.price,
       }
       addCoffeeShopCart(newProduct);
 
@@ -122,7 +124,7 @@ export function Details () {
 
             <HView>
               <Title>{coffee.name}</Title>
-              <Price price={coffee.price} size="lg" />
+              <Price price={moneyMask(coffee.price)} size="lg" />
             </HView>
 
             <Description>{coffee.description}</Description>

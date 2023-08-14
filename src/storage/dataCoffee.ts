@@ -21,83 +21,83 @@ export const dataCoffee: Coffee[] = [
     image: CoffeeTradicional1,
     marked: 'TRADICIONAL',
     name: 'Expresso Tradicional',
-    price: '9,90'
+    price: 990
   },
   {
     description: 'Expresso diluído, menos intenso que o tradicional',
     image: CoffeeTradicional2,
     marked: 'TRADICIONAL',
     name: 'Expresso Americano',
-    price: '9,90'
+    price: 990
   },
   {
     description: 'Café expresso tradicional com espuma cremosa',
     image: CoffeeTradicional3,
     marked: 'TRADICIONAL',
     name: 'Expresso Cremoso',
-    price: '9,90'
+    price: 990
   },
   {
     description: 'Café expresso com o dobro de leite e espuma cremosa',
     image: CoffeeTradicional4,
     marked: 'TRADICIONAL',
     name: 'Latte',
-    price: '9,90'
+    price: 990
   },
   {
     description: 'Bebida preparada com café expresso e cubos de gelo',
     image: CoffeeTradicional5,
     marked: 'TRADICIONAL',
     name: 'Expresso Gelado',
-    price: '9,90'
+    price: 990
   },
   {
     description: 'Bebida com canela feita de doses de café, leite e espuma',
     image: CoffeeDoce1,
     marked: 'DOCE',
     name: 'Capuccino',
-    price: '9,90'
+    price: 990
   },
   {
     description: 'Café expresso com calda de chocolate, pouco leite e espuma',
     image: CoffeeDoce2,
     marked: 'DOCE',
     name: 'Mocaccino',
-    price: '9,90'
+    price: 990
   },
   {
     description: 'Bebida feita com chocolate dissolvido no leite quente e café',
     image: CoffeeDoce3,
     marked: 'DOCE',
     name: 'Chocolate Quente',
-    price: '9,90'
+    price: 990
   },
   {
     description: 'Drink gelado de café expresso com rum, creme de leite e hortelã',
     image: CoffeeEspecial1,
     marked: 'ESPECIAL',
     name: 'Cubano',
-    price: '9,90'
+    price: 990
   },
   {
     description: 'Bebida adocicada preparada com café e leite de coco',
     image: CoffeeEspecial2,
     marked: 'ESPECIAL',
     name: 'Havaiano',
-    price: '9,90'
+    price: 990
   },
   {
     description: 'Bebida preparada com grãos de café árabe e especiarias',
     image: CoffeeEspecial3,
     marked: 'ESPECIAL',
     name: 'Árabe',
-    price: '9,90'
+    price: 990
   },
   {
     description: 'Bebida a base de café, uísque irlandês, açúcar e chantilly',
     image: CoffeeEspecial4,
     name: 'Irlandês',
     marked: 'ESPECIAL',
-    price: '9,90',
+    price: 990
   }
 ];

@@ -1,8 +1,10 @@
+import 'react-native-gesture-handler';
 import { useEffect, useState } from 'react';
 import { StatusBar } from 'react-native';
 import { useFonts, Roboto_400Regular, Roboto_700Bold } from '@expo-google-fonts/roboto';
 import { Baloo2_700Bold } from '@expo-google-fonts/baloo-2';
 import { ThemeProvider } from 'styled-components/native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { ShoppingCartProvider } from './src/contexts/cardShopping';
 
@@ -34,11 +36,13 @@ export default function App() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <StatusBar barStyle='light-content' translucent />
-      <ShoppingCartProvider>
-        <Routes />
-      </ShoppingCartProvider>
-    </ThemeProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ThemeProvider theme={theme}>
+        <StatusBar barStyle='light-content' translucent />
+        <ShoppingCartProvider>
+          <Routes />
+        </ShoppingCartProvider>
+      </ThemeProvider>
+    </GestureHandlerRootView>
   );
 }

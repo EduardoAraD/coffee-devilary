@@ -1,8 +1,15 @@
 import styled, { css } from "styled-components/native";
 
-export const Container = styled.TouchableOpacity`
+export type ColorStyleProps = 'PRIMARY' | 'SECUNDARY';
+
+type ColorProps = {
+  typeColor: ColorStyleProps;
+}
+
+export const Container = styled.TouchableOpacity<ColorProps>`
   padding: 12px 8px;
-  background-color: ${({ theme }) => theme.colors.PURPLE};
+  background-color: ${({ theme, typeColor }) =>
+    typeColor === 'PRIMARY' ? theme.colors.PURPLE_DARK : theme.colors.YELLOW_DARK };
   flex: 1;
   justify-content: center;
   align-items: center;

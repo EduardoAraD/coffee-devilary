@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { View, ViewProps } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 import { useShoppingCart } from "../../hooks/useShoppingCart";
@@ -16,7 +16,7 @@ import {
   Title,
 } from "./styles";
 
-type Props = {
+type Props = ViewProps & {
   typeColor?: TypeColorHeader;
   title?: string;
   showIconBack?: boolean;
