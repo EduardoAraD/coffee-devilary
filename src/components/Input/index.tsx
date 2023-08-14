@@ -1,7 +1,7 @@
 import { TextInputProps } from 'react-native';
+import { useTheme } from 'styled-components/native';
 
 import { InputComponent, Container, Icon } from './styles';
-import { useTheme } from 'styled-components/native';
 
 type Props = TextInputProps & {}
 

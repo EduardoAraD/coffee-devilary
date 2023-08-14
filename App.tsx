@@ -31,16 +31,16 @@ export default function App() {
     return () => { timeout };
   }, []);
 
-  if (!fontsLoaded || showSplash) {
-    return <SplashArt />;
-  }
-
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ThemeProvider theme={theme}>
         <StatusBar barStyle='light-content' translucent />
         <ShoppingCartProvider>
-          <Routes />
+          {(!fontsLoaded || showSplash) ? (
+            <SplashArt />
+          ) : (
+            <Routes />
+          )}
         </ShoppingCartProvider>
       </ThemeProvider>
     </GestureHandlerRootView>

@@ -1,7 +1,8 @@
 import { Image, ViewProps } from "react-native";
 
-import { Coffee } from "../../Model/Coffee";
 import { Price } from "../Price";
+
+import { Coffee } from "../../Model/Coffee";
 
 import { moneyMask } from "../../utils/mask";
 

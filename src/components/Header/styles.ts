@@ -1,4 +1,4 @@
-import { ArrowArcLeft, ArrowArcRight, ArrowLeft, MapPin, ShoppingCart } from "phosphor-react-native";
+import { ArrowLeft, MapPin, ShoppingCart } from "phosphor-react-native";
 import { css, styled } from "styled-components/native";
 
 export type TypeColorHeader = 'PRIMARY' | 'SECUNDARY';

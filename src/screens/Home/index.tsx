@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { ImageSourcePropType, SectionList, StatusBar, View } from 'react-native';
+import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import Animated, {
   Extrapolate,
   SlideInRight,
@@ -11,15 +12,19 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useTheme } from 'styled-components/native';
 
+import { Coffee } from '../../Model/Coffee';
 import { MarketCoffee } from '../../Model/MarkedCoffee';
 import { SectionListCoffee } from '../../Model/SectionListCoffee';
 
 import { CardTouchCoffee } from '../../components/CardTouchCoffee';
 import { Carrousel } from '../../components/Carrousel';
+import { Header } from '../../components/Header';
 import { Input } from '../../components/Input';
+import { ModalShopCart } from '../../components/ModalCarrinho';
 import { OptionFilterCoffee } from '../../components/OptionFilterCoffee';
 
 import { getAllCoffeeSectionList } from '../../services/getAllCoffeeSectionList';
+import { getThreeCoffeeInCarrousel } from '../../services/getThreeCoffeeInCarrousel';
 
 import SementesCoffee from '../../assets/sementesCoffee.svg';
 import {
@@ -36,12 +41,6 @@ import {
   ViewOptions,
   TextSection
 } from './styles';
-import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
-import { Header } from '../../components/Header';
-import { Coffee } from '../../Model/Coffee';
-
-import { getThreeCoffeeInCarrousel } from '../../services/getThreeCoffeeInCarrousel';
-import { ModalShopCart } from '../../components/ModalCarrinho';
 
 export type HomeRouteProps = {
   product?: {

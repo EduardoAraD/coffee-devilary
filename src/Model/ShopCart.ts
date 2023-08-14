@@ -7,6 +7,10 @@ export interface ShopCart {
   priceItem: number;
 }
 
+export interface ShopCartWithId extends ShopCart {
+  id: number;
+}
+
 export interface ShopCartComplete {
   id: number;
   qtd: number;

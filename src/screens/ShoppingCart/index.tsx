@@ -15,24 +15,30 @@ import { Container, IconTrash, Line, ViewRemove } from "./styles";
 
 export function ShoppingCart() {
   const { navigate } = useNavigation();
-  const { shopCart, updateQtdCoffeeShopCart, removeCoffeeShopCart, clearShopCart } = useShoppingCart();
+  const {
+    shopCart,
+    updateQtdCoffeeShopCart,
+    removeCoffeeShopCart,
+    clearShopCart
+  } = useShoppingCart();
 
   const swiapebleRefs = useRef<Swipeable[]>([]);
 
-  function handleRemoveItemShopCart(id: number) {
-    removeCoffeeShopCart(id);
+  async function handleRemoveItemShopCart(id: number) {
+    await removeCoffeeShopCart(id);
   }
 
-  function handleUpdateItem(idItem: number, qtdItem: number) {
+  async function handleUpdateItem(idItem: number, qtdItem: number) {
     if(qtdItem === 0) {
-      handleRemoveItemShopCart(idItem);
+      await handleRemoveItemShopCart(idItem);
     } else {
-      updateQtdCoffeeShopCart({ id: idItem, qtd: qtdItem })
+      await updateQtdCoffeeShopCart({ id: idItem, qtd: qtdItem })
     }
   }
 
-  function handleConfirm() {
-    clearShopCart();
+  async function handleConfirm() {
+    await clearShopCart();
+    
     navigate('finish');
   }
 
@@ -66,7 +72,6 @@ export function ShoppingCart() {
                 }
               }}
               overshootLeft={false}
-              // containerStyle={styles.swipeableContainer}
               leftThreshold={10}
               renderRightActions={() => null}
               onSwipeableOpen={() => handleRemoveItemShopCart(item.id)}

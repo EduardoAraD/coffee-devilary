@@ -14,6 +14,8 @@ import { Smoke } from "../../components/Smoke";
 
 import { getCoffeeByName } from "../../services/getCoffeeByName";
 
+import { moneyMask } from "../../utils/mask";
+
 import CoffeeImg from '../../assets/coffee.png';
 import {
   Container,
@@ -34,7 +36,6 @@ import {
   Touch,
   ViewOptionCoffee,
 } from "./styles";
-import { moneyMask } from "../../utils/mask";
 
 export type DetailsRoutes = {
   name: string;
@@ -85,7 +86,7 @@ export function Details () {
     }
   }
 
-  function handleAddCoffeeShopping() {
+  async function handleAddCoffeeShopping() {
     if(qtdCoffee > 0 && coffeeML !== '') {
       const newProduct = {
         ml: coffeeML,
@@ -94,7 +95,7 @@ export function Details () {
         image: coffee.image,
         priceItem: priceCoffee,
       }
-      addCoffeeShopCart(newProduct);
+      await addCoffeeShopCart(newProduct);
 
       navigate('home', { product: newProduct })
     } else {
